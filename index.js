@@ -19,7 +19,7 @@ Step.prototype.step = function(cmd) {
   var other = cmd
   if(typeof cmd === 'string' || cmd instanceof String)
     other = new Step(function() { return cmd })
-  return new Step(this.exe, mori.conj(this.steps, other))
+  return new Step(this.exe, mori.conj(this.steps, new Step(other)))
 }
 
 Step.prototype.include = function(step) {
@@ -64,8 +64,7 @@ Step.prototype.runBatch = function(targets) {
 Step.prototype.add = function(opts) {
   console.log('Add', opts)
   // TODO: This needs expanding like everything else would
-  return this.run("mkdir -p " + path.dirname(opts.destination))
-  .step(function(cfg) {
+  return this.run("mkdir -p " + path.dirname(opts.destination)).step(function(cfg) {
     var applied = transformConfig(opts, cfg)
     return ["ADD", applied.source, applied.destination].join(" ")
   })
