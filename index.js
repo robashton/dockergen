@@ -1,18 +1,19 @@
 var mori = require('mori')
  ,  path = require('path')
 
-function transformConfig(cfg, target) {
+function transformConfig(opts, cfg) {
   // TODO: Take any functions and invoke them with cfg
-  return target
+  return opts
 }
 
 function Step(cmd, steps) {
-  this.exe = cmd || function() { console.log("nope"); return "nope" }
-  this.steps = steps || mori.list()
+  this.exe = cmd || function() { return "" }
+  this.steps = steps || mori.vector()
 }
 
-Step.prototype.flatten = function() {
-  return mori.flatten(mori.map(function(s) { return s.flatten() }, this.steps))
+Step.prototype.visit = function(cb) {
+  cb(this.exe || function() { return ""})
+  mori.each(this.steps, function(s) {  s.visit(cb) })
 }
 
 Step.prototype.step = function(cmd) {
@@ -30,16 +31,15 @@ Step.prototype.from = function(source) {
   // This is probably wrong
   // What we probably want is this to be a case of running docker
   // from a base image
-  return this.step("FROM " + source)
+  return this.step(function() { return "FROM " + source })
 }
 
-Step.prototype.env = function(opts) {
+Step.prototype.env = function(key, value) {
   // This is probably wrong
   // What we probably want is this to be a case of running docker
   // with these settings or with the appropriate command
-  return this.step(function(cfg) {
-    var applied = transformConfig(opts, cfg)
-    return [ "ENV", opts.key, opts.value ].join(" ")
+  return this.step(function() {
+    return [ "ENV", key, value ].join(" ")
   })
 }
 
@@ -47,14 +47,13 @@ Step.prototype.cmd = function(opts) {
   // This is probably wrong
   // What we probably want is this to be a case of running docker
   // With the appropriate command
-  return this.step(function(cfg) {
-    var applied = transformConfig(opts, cfg)
-    return [ "CMD [\"", applied.target, "\"]"].join(" ")
+  return this.step(function() {
+    return [ "CMD [\"", opts.target, "\"]"].join(" ")
   })
 }
 
 Step.prototype.run = function(cmd) {
-  return this.step(function(cfg) { return "RUN " + cmd })
+  return this.step(function() { return "RUN " + cmd })
 }
 
 Step.prototype.runBatch = function(targets) {
@@ -62,12 +61,10 @@ Step.prototype.runBatch = function(targets) {
 }
 
 Step.prototype.add = function(opts) {
-  console.log('Add', opts)
-  // TODO: This needs expanding like everything else would
-  return this.run("mkdir -p " + path.dirname(opts.destination)).step(function(cfg) {
-    var applied = transformConfig(opts, cfg)
-    return ["ADD", applied.source, applied.destination].join(" ")
-  })
+  return this.run("mkdir -p " + path.dirname(opts.destination))
+             .step(function(cfg) {
+                return ["ADD", opts.source, opts.destination].join(" ")
+              })
 }
 
 Step.prototype.template = function(opts) {
@@ -80,9 +77,8 @@ Step.prototype.template = function(opts) {
 
 Step.prototype.expose = function(opts) {
   // There is no command for this
-  return this.step(function(cfg) {
-    var applied = transformConfig(opts, cfg)
-    return ["EXPOSE", applied.host].join(" ")
+  return this.step(function() {
+    return ["EXPOSE", opts.host].join(" ")
   })
 }
 
@@ -91,22 +87,16 @@ Step.prototype.install = function(package) {
 }
 
 Step.prototype.wget = function(opts) {
-  return this.step(function(cfg) {
-    var applied = transformConfig(opts, cfg)
-    var mkdir = ["mkdir -p", applied.dir].join(" ")
-    var cd = ["cd", applied.dir].join(" ")
-    var wget = ["wget",  applied.from].join(" ")
-    return this.runBatch([mkdir, cd, wget])
-  })
+  var mkdir = ["mkdir -p", opts.dir].join(" ")
+  var cd = ["cd", opts.dir].join(" ")
+  var wget = ["wget",  opts.from].join(" ")
+  return this.runBatch([mkdir, cd, wget])
 }
 
 Step.prototype.tar = function(opts) {
-  return this.step(function(cfg) {
-    var applied = transformConfig(opts, cfg)
-    var cd = ["cd", path.dirname(applied.file)].join(" ")
-    var cmd = ["tar", applied.flags, path.basename(applied.file)].join(" ")
-    return this.runBatch([cd, cmd])
-  })
+  var cd = ["cd", path.dirname(opts.file)].join(" ")
+  var cmd = ["tar", opts.flags, path.basename(opts.file)].join(" ")
+  return this.runBatch([cd, cmd])
 }
 
 function dsl() {
