@@ -7,6 +7,6 @@ module.exports = dsl()
               })
               .tar({
                 flags: "xzf",
-                file: "grafana-1.5.4.tar.gz"
+                file: "/root/grafana/grafana-1.5.4.tar.gz"
               })
               .run("npm install -g http-server")

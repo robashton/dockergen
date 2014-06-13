@@ -7,6 +7,6 @@ module.exports = dsl()
                   })
                   .tar({
                     flags: "xzf",
-                    file: "elasticsearch-1.2.1.tar.gz"
+                    file: "/root/elasticsearch/elasticsearch-1.2.1.tar.gz"
                   })
                   .run("cp -r /root/elasticsearch/elasticsearch-1.2.1 /opt/elasticsearch")
