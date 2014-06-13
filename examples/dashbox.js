@@ -10,8 +10,18 @@ var dsl = require('../index')
 module.exports = dsl()
     .include(base)
     .include(build)
-    .include(riemann)
-    .include(riemanndash)
-    .include(influx)
-    .include(grafana)
-    .include(elasticsearch)
+    .include(riemann({
+      listen: 8080
+    }))
+    .include(riemanndash{
+      listen: 4567
+    })
+    .include(influx({
+
+    }))
+    .include(grafana({
+
+    })
+    .include(elasticsearch({
+
+    })
