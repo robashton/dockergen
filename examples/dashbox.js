@@ -13,15 +13,15 @@ module.exports = dsl()
     .include(riemann({
       listen: 8080
     }))
-    .include(riemanndash{
+    .include(riemanndash({
       listen: 4567
-    })
+    }))
     .include(influx({
 
     }))
     .include(grafana({
 
-    })
+    }))
     .include(elasticsearch({
 
-    })
+    }))

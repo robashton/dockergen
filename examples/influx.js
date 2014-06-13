@@ -8,7 +8,7 @@ module.exports = function(opts) {
   .run("dpkg -i /root/influx/influxdb_latest_amd64.deb")
   .config(function(c) {
     c.add({
-      from: "runit/influxdb"
+      from: "runit/influxdb",
       to: "/etc/service/influxdb/run"
     })
     .add({

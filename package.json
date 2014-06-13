@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "mori": "~0.2.6"
+    "mori": "~0.2.6",
+    "mustache": "~0.8.1"
   }
 }
