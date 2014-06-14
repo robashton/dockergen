@@ -1,4 +1,5 @@
 var dsl = require('../index')
+  , mustache = require('../mustache')
 
 module.exports = function(opts) {
   return dsl()
@@ -12,7 +13,7 @@ module.exports = function(opts) {
           })
           .run("cp -r /root/elasticsearch/elasticsearch-1.2.1 /opt/elasticsearch")
           .config(function(c) {
-            c.add({
+            return c.add({
               from: "runit/elasticsearch",
               to: "/etc/service/elasticsearch/run"
             })

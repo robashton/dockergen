@@ -10,7 +10,7 @@ module.exports = function(opts) {
   .run("/build/devheaders.sh")
   .run("gem install riemann-client riemann-tools riemann-dash")
   .config(function(c) {
-    c.add({
+    return c.add({
       from: "config/riemann-dash/config.rb",
       to: "/root/riemann-dash/config.rb",
       transform: mustache(opts)
