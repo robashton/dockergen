@@ -1,18 +1,4 @@
-# Welcome to the InfluxDB configuration file.
-
-# If hostname (on the OS) doesn't return a name that can be resolved by the other
-# systems in the cluster, you'll have to set the hostname to an IP or something
-# that can be resolved here.
-# hostname = ""
-
 bind-address = "0.0.0.0"
-
-# Once every 24 hours InfluxDB will report anonymous data to m.influxdb.com
-# The data includes raft name (random 8 bytes), os, arch and version
-# We don't track ip addresses of servers reporting. This is only used
-# to track the number of instances running and the versions which
-# is very helpful for us.
-# Change this option to true to disable reporting.
 reporting-disabled = false
 
 [logging]
@@ -28,6 +14,10 @@ assets = "/opt/influxdb/current/admin"
 # Configure the http api
 [api]
 port     = {{apiport}}
+
+
+
+
 # ssl-port = 8084    # Ssl support is enabled if you set a port and cert
 # ssl-cert = /path/to/cert.pem
 
