@@ -7,7 +7,7 @@ var dsl = require('../index')
   , grafana = require('./grafana')
   , elasticsearch = require('./elasticsearch')
 
-module.exports = dsl()
+module.exports = dsl("dashbox")
     .include(base)
     .include(build)
     .include(riemann({

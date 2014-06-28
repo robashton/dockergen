@@ -2,7 +2,7 @@ var dsl = require('../index')
   , mustache = require('../mustache')
 
 module.exports = function(opts) {
-  return dsl()
+  return dsl("elasticsearch")
           .wget({
             dir: "/root/elasticsearch",
             from: "https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.2.1.tar.gz"

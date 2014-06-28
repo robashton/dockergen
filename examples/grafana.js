@@ -2,7 +2,7 @@ var dsl = require('../index')
   , mustache = require('../mustache')
 
 module.exports = function(opts) {
-  return dsl()
+  return dsl("grafana")
     .wget({
       dir: "/root/grafana",
       from: "http://grafanarel.s3.amazonaws.com/grafana-1.5.4.tar.gz"

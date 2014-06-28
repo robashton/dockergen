@@ -2,7 +2,7 @@ var dsl = require('../index')
   , mustache = require('../mustache')
 
 module.exports = function(opts) {
-  return dsl()
+  return dsl("influx")
   .wget({ dir: "/root/influx",
           from: "http://s3.amazonaws.com/influxdb/influxdb_latest_amd64.deb"})
   .run("dpkg -i /root/influx/influxdb_latest_amd64.deb")
