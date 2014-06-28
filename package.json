@@ -1,5 +1,5 @@
 {
-  "name": "dockergen",
+  "name": "fishyfish",
   "version": "0.0.0",
   "description": "",
   "main": "index.js",
@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "mori": "~0.2.6",
     "mustache": "~0.8.1",
