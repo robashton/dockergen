@@ -35,16 +35,6 @@ if(errors.length > 0) {
   return
 }
 
-//var data = ""
-//var next = box.process(function(step) {
-//  data += step() + "\n"
-//})
-//
-//next.process(function(step) {
-//  data += step() + "\n"
-//})
-//
-
 if(!fs.existsSync(".docker")) {
   fs.mkdirSync(".docker")
 }
@@ -54,7 +44,6 @@ function processFiles(files) {
   if(files.length === 0) return
   var file = files.shift()
   var dirname = path.dirname(file.dest)
-  console.log('Derping', dirname)
   derp(dirname, function(err) {
     if(err) return console.error(err)
     if(file.fn) {

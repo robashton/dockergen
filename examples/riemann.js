@@ -1,8 +1,9 @@
 var dsl = require('../index')
   , mustache = require('../mustache')
 
-var version = "0.2.5",
-    tar = ["riemann-", version, ".tar.bz2" ]
+var version = "0.2.5"
+  , tar = ["riemann-", version, ".tar.bz2" ].join("")
+  , installpath = "/root/riemann/riemann-" + version
 
 module.exports = function(opts) {
   return dsl("Riemann")
@@ -15,10 +16,12 @@ module.exports = function(opts) {
     .config(function(c) {
       return c.add({
           from: __dirname + "/config/riemann/riemann.config",
-          to: "/root/riemann/riemann-" + version + "/etc/riemann.config",
+          to: installpath + "/etc/riemann.config",
           transform: mustache(opts) })
         .add({
           from: __dirname + "/runit/riemann",
-          to: "/etc/service/riemann/run" })
+          to: "/etc/service/riemann/run",
+          transform: mustache({ installpath: installpath })
+        })
       })
     }

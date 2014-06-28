@@ -2,6 +2,7 @@ var dsl = require('../index')
   , mustache = require('../mustache')
 
 module.exports = function(opts) {
+  opts.installpath = "/root/grafana/grafana-1.5.4"
   return dsl("grafana")
     .wget({
       dir: "/root/grafana",
@@ -15,11 +16,12 @@ module.exports = function(opts) {
     .config(function(c) {
       return c.add({
           from: __dirname + "/runit/grafana",
-          to: "/etc/service/grafana/run"
+          to: "/etc/service/grafana/run",
+          transform: mustache(opts)
         })
         .add({
           from: __dirname + "/config/grafana/config.js",
-          to: "/root/grafana/grafana-1.5.4",
+          to: opts.installpath,
           transform: mustache(opts)
         })
     })
