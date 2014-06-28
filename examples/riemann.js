@@ -14,11 +14,11 @@ module.exports = function(opts) {
       file: "/root/riemann/" + tar})
     .config(function(c) {
       return c.add({
-          from: "config/riemann/riemann.config",
+          from: __dirname + "/config/riemann/riemann.config",
           to: "/root/riemann/riemann-" + version + "/etc/riemann.config",
           transform: mustache(opts) })
         .add({
-          from: "/runit/riemann",
+          from: __dirname + "/runit/riemann",
           to: "/etc/service/riemann/run" })
       })
     }

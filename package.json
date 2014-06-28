@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "mori": "~0.2.6",
-    "mustache": "~0.8.1"
+    "mustache": "~0.8.1",
+    "mkdirp": "~0.5.0"
   }
 }

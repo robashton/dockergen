@@ -1,0 +1,2 @@
+#!/bin/bash
+exec http-server -p 80 /root/grafana/grafana-1.5.4 >> /var/log/grafana.log 2>&1

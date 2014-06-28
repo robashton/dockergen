@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /usr/local/bin/riemann-dash /root/riemann-dash/config.rb >> /var/log/riemann-dash.log 2>&1

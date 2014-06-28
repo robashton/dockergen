@@ -14,11 +14,11 @@ module.exports = function(opts) {
     .run("npm install -g http-server")
     .config(function(c) {
       return c.add({
-          from: "runit/grafana",
+          from: __dirname + "/runit/grafana",
           to: "/etc/service/grafana/run"
         })
         .add({
-          from: "config/grafana/config.js",
+          from: __dirname + "/config/grafana/config.js",
           to: "/root/grafana/grafana-1.5.4",
           transform: mustache(opts)
         })

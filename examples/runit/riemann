@@ -1,0 +1,6 @@
+#!/bin/sh
+sv start influxdb || exit 1
+exec /root/riemann/riemann-0.2.5/bin/riemann /root/riemann/riemann-0.2.5/etc/riemann.config >> /var/log/riemann.log 2>&1
+
+
+

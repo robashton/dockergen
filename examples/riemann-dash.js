@@ -11,12 +11,12 @@ module.exports = function(opts) {
   .run("gem install riemann-client riemann-tools riemann-dash")
   .config(function(c) {
     return c.add({
-      from: "config/riemann-dash/config.rb",
+      from: __dirname + "/config/riemann-dash/config.rb",
       to: "/root/riemann-dash/config.rb",
       transform: mustache(opts)
     })
     .add({
-      from: "runit/riemann-dash",
+      from: __dirname + "/runit/riemann-dash",
       to: "/etc/service/riemann-dash/run"
     })
   })

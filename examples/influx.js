@@ -8,11 +8,11 @@ module.exports = function(opts) {
   .run("dpkg -i /root/influx/influxdb_latest_amd64.deb")
   .config(function(c) {
     return c.add({
-      from: "runit/influxdb",
+      from: __dirname + "/runit/influxdb",
       to: "/etc/service/influxdb/run"
     })
     .add({
-      from: "config/influxdb/config.toml",
+      from: __dirname + "/config/influxdb/config.toml",
       to: "/opt/influxdb/shared/config.toml",
       transform: mustache(opts)
     })

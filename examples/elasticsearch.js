@@ -14,11 +14,11 @@ module.exports = function(opts) {
           .run("cp -r /root/elasticsearch/elasticsearch-1.2.1 /opt/elasticsearch")
           .config(function(c) {
             return c.add({
-              from: "runit/elasticsearch",
+              from: __dirname + "/runit/elasticsearch",
               to: "/etc/service/elasticsearch/run"
             })
             .add({
-              from: "config/elasticsearch/elasticsearch.yml",
+              from: __dirname + "/config/elasticsearch/elasticsearch.yml",
               to: "/opt/elasticsearch/config",
               transform: mustache(opts)
             })
