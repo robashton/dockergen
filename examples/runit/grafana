@@ -1,2 +1,0 @@
-#!/bin/bash
-exec http-server -p 80 {{installpath}} >> /var/log/grafana.log 2>&1

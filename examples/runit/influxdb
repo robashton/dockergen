@@ -1,3 +1,0 @@
-#!/bin/sh
-influxdb -config=/opt/influxdb/shared/config.toml
-

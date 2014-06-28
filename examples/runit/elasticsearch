@@ -1,5 +1,0 @@
-#!/bin/bash
-
-# ES_HOME=/opt/elasticsearch/lib
-. {{installpath}}/bin/elasticsearch.in.sh
-exec {{installpath}}/bin/elasticsearch >> /var/log/elasticsearch.log 2>&1
