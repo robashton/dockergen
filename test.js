@@ -15,11 +15,12 @@ var BuildContext = {
     dockerfile += text + "\n"
   },
   file: function(source, fn) {
-    var dest = path.join(".docker", "files", source)
-    dest = dest.replace(process.cwd(), "")
-    console.log('Genned a filename', dest)
+    var dest = path.relative(process.cwd(), source)
+    dest = path.join(".docker", "files", dest)
     files.push({ source: source, fn: fn, dest: dest})
-    return dest
+
+    var res = path.relative(".docker", dest)
+    return res
   },
   error: function(msg) {
     errors.push(msg)
@@ -64,9 +65,11 @@ function processFiles(files) {
     } else {
       var is = fs.createReadStream(file.source)
       var os = fs.createWriteStream(file.dest);
-      is.pipe(os, function() {
+      is.on('end', function(err) {
+        if(err) return console.error(err)
         processFiles(files)
       })
+      is.pipe(os)
     }
   })
 }
