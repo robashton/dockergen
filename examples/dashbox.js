@@ -7,21 +7,36 @@ var dsl = require('../index')
   , grafana = require('./grafana')
   , elasticsearch = require('./elasticsearch')
 
+
+var config = {
+  influxdb: "riemann",
+  influxport: 8086,
+  riemanndashport: 4567,
+  influxadminport: 8083,
+  influxapiport: 8086,
+  elasticsearchport: 9200
+}
+
 module.exports = dsl("dashbox")
     .include(base)
     .include(build)
     .include(riemann({
-      listen: 8080
+      influxhost: "127.0.0.1",
+      influxdb: config.influxdb,
+      influxport: config.influxport
     }))
     .include(riemanndash({
-      listen: 4567
+      port: config.riemanndashport
     }))
     .include(influx({
-
+      adminport: config.influxadminport,
+      apiport: config.influxapiport
     }))
     .include(grafana({
-
+      elasticsearchport: config.elasticsearchport,
+      influxdb: config.infuxdb,
+      influxport: config.influxapiport
     }))
     .include(elasticsearch({
-
+      port: config.elasticsearchport
     }))

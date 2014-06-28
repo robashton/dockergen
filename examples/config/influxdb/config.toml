@@ -22,12 +22,12 @@ file   = "/var/log/influxdb"         # stdout to log to standard out
 
 # Configure the admin server
 [admin]
-port   = 8083              # binding is disabled if the port isn't set
+port   = {{adminport}}
 assets = "/opt/influxdb/current/admin"
 
 # Configure the http api
 [api]
-port     = 8086    # binding is disabled if the port isn't set
+port     = {{apiport}}
 # ssl-port = 8084    # Ssl support is enabled if you set a port and cert
 # ssl-cert = /path/to/cert.pem
 

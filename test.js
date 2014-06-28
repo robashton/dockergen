@@ -18,7 +18,6 @@ var BuildContext = {
     var dest = path.relative(process.cwd(), source)
     dest = path.join(".docker", "files", dest)
     files.push({ source: source, fn: fn, dest: dest})
-
     var res = path.relative(".docker", dest)
     return res
   },
