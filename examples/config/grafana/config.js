@@ -5,7 +5,7 @@
  */
 define(['settings'],
 function (Settings) {
-  
+
 
   return new Settings({
 
@@ -13,13 +13,13 @@ function (Settings) {
      * elasticsearch url:
      * For Basic authentication use: http://username:password@domain.com:9200
      */
-    elasticsearch: "http://"+window.location.hostname+":9200",
+    elasticsearch: "http://"+window.location.hostname+":{{elasticsearchport}}",
 
-    datasources: {      
+    datasources: {
        influx: {
 	 default: true,
          type: 'influxdb',
-         url: 'http://' + window.location.hostname + ':8086/db/riemann',
+         url: 'http://' + window.location.hostname + ':{{influxport}}/db/{{influxdb}}',
          username: 'root',
          password: 'root'
        }
