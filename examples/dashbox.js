@@ -1,4 +1,4 @@
-var dsl = require('../index')
+var docker = require('../index')
   , base = require('./base')
   , build = require('./build')
   , riemann = require('./riemann')
@@ -6,7 +6,6 @@ var dsl = require('../index')
   , influx = require('./influx')
   , grafana = require('./grafana')
   , elasticsearch = require('./elasticsearch')
-
 
 var config = {
   influxdb: "riemann",
@@ -17,26 +16,26 @@ var config = {
   elasticsearchport: 9200
 }
 
-module.exports = dsl("dashbox")
-    .include(base)
-    .include(build)
-    .include(riemann({
-      influxhost: "127.0.0.1",
-      influxdb: config.influxdb,
-      influxport: config.influxport
-    }))
-    .include(riemanndash({
-      port: config.riemanndashport
-    }))
-    .include(influx({
-      adminport: config.influxadminport,
-      apiport: config.influxapiport
-    }))
-    .include(grafana({
-      elasticsearchport: config.elasticsearchport,
-      influxdb: config.infuxdb,
-      influxport: config.influxapiport
-    }))
-    .include(elasticsearch({
-      port: config.elasticsearchport
-    }))
+docker("dashbox")
+      .include(base)
+      .include(build)
+      .include(riemann({
+        influxhost: "127.0.0.1",
+        influxdb: config.influxdb,
+        influxport: config.influxport
+      }))
+      .include(riemanndash({
+        port: config.riemanndashport
+      }))
+      .include(influx({
+        adminport: config.influxadminport,
+        apiport: config.influxapiport
+      }))
+      .include(grafana({
+        elasticsearchport: config.elasticsearchport,
+        influxdb: config.infuxdb,
+        influxport: config.influxapiport
+      }))
+      .include(elasticsearch({
+        port: config.elasticsearchport
+  })).execute()
