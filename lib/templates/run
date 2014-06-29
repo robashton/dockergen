@@ -1,0 +1,19 @@
+#!/bin/bash
+
+COMMAND=$1
+
+START=""
+
+case $COMMAND in
+  {{#commands}}
+  {{{name}}})
+    START={{{exe}}}
+    ;;
+  {{/commands}}
+  *)
+    echo "Unknown command \"$1\"" ; exit 1
+    ;;
+esac
+
+docker run --name={{packageName}} {{#options}}{{{.}}} {{/options}}{{packageName}} $START
+
